@@ -1,0 +1,1 @@
+results from writeFileSync is first file second file
