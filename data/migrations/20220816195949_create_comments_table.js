@@ -4,15 +4,15 @@
  */
 exports.up = function (knex) {
   return knex.schema.createTable("comments", (table) => {
-    table.increments("comment_id");
-    table
-      .integer("post_id")
-      .unsigned()
-      .notNullable()
-      .references("post_id")
-      .inTable("posts")
-      .onDelete("CASCADE")
-      .onUpdate("CASCADE"),
+    table.increments("comment_id"),
+      table
+        .integer("post_id")
+        .unsigned()
+        .notNullable()
+        .references("post_id")
+        .inTable("posts")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE"),
       table
         .integer("user_id")
         .unsigned()
@@ -20,7 +20,9 @@ exports.up = function (knex) {
         .references("id")
         .inTable("users")
         .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate("CASCADE"),
+      table.text("body"),
+      table.timestamps(true, false);
   });
 };
 
