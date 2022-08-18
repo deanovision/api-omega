@@ -10,7 +10,6 @@ async function getUserById(req, res, next) {
     let user = await db.getUserById(user_id);
     res.status(200).json({ ...user });
   } catch (err) {
-    // console.log(err.message);
     err === "user not found"
       ? next({ status: true, code: 400 })
       : next({ status: true, code: 500 });
