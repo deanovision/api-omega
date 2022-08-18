@@ -1,18 +1,18 @@
 const db = require("../models/userModel");
-
 module.exports = (router) => {
   router.get("/:user_id", getUserById);
   return router;
 };
 
-async function getUserById(req, res) {
+async function getUserById(req, res, next) {
   try {
     const { user_id } = req.params;
     let user = await db.getUserById(user_id);
     res.status(200).json({ ...user });
   } catch (err) {
+    // console.log(err.message);
     err === "user not found"
-      ? res.status(400).json({ err })
-      : res.status(500).json({ err });
+      ? next({ status: true, code: 400 })
+      : next({ status: true, code: 500 });
   }
 }
