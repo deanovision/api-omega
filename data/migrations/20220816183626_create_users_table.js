@@ -5,7 +5,7 @@
 exports.up = function (knex) {
   return knex.schema.createTable("users", (table) => {
     table.increments("id"),
-      table.string("sub").notNullable().unique(),
+      table.string("user_id").notNullable().unique().primary(),
       table.string("email").notNullable().unique(),
       table.string("user_name").notNullable().unique(),
       table.string("name"),

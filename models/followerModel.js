@@ -1,4 +1,4 @@
-const db = require("../data/db/db");
+const db = require("../data/db");
 module.exports = {
   followUser,
   unfollowUser,

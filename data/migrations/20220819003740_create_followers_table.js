@@ -5,12 +5,16 @@
 exports.up = function (knex) {
   return knex.schema.createTable("followers", (table) => {
     table.increments("id"),
-      table.string("user_id").references("sub").inTable("users").notNullable(),
       table
-        .string("follower_user_id")
-        .references("sub")
-        .inTable("users")
-        .notNullable(),
+        .string("user_id")
+        .notNullable()
+        .references("user_id")
+        .inTable("users"),
+      table
+        .string("friend_user_id")
+        .notNullable()
+        .references("user_id")
+        .inTable("users"),
       table.timestamps(true, true);
   });
 };
@@ -20,5 +24,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex.schema.dropTableIfExists("following");
+  return knex.schema.dropTableIfExists("followers");
 };

@@ -4,16 +4,15 @@
  */
 exports.up = function (knex) {
   return knex.schema.createTable("posts", (table) => {
-    table.increments("post_id"),
+    table.increments("post_id").primary(),
+      table.string("user_id").notNullable(),
       table
-        .integer("user_id")
-        .unsigned()
-        .notNullable()
-        .references("sub")
+        .foreign("user_id")
+        .references("user_id")
         .inTable("users")
         .onDelete("CASCADE")
         .onUpdate("CASCADE"),
-      table.text("body"),
+      table.text("body").notNullable(),
       table.timestamps(true, true);
   });
 };
