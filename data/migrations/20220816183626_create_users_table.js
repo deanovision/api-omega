@@ -11,8 +11,8 @@ exports.up = function (knex) {
       table.string("name"),
       table.text("avatar_url"),
       table.text("bio"),
-      table.timestamp("last_active"),
-      table.timestamps(true, false);
+      table.timestamp("last_active").defaultTo(knex.fn.now()),
+      table.timestamps(true, true);
   });
 };
 

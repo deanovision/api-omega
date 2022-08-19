@@ -22,7 +22,7 @@ exports.up = function (knex) {
         .onDelete("CASCADE")
         .onUpdate("CASCADE"),
       table.text("body"),
-      table.timestamps(true, false);
+      table.timestamps(true, true);
   });
 };
 

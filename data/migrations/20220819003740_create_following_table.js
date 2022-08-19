@@ -3,17 +3,14 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex.schema.createTable("posts", (table) => {
-    table.increments("post_id"),
+  return knex.schema.createTable("followers", (table) => {
+    table.increments("id"),
+      table.string("user_id").references("sub").inTable("users").notNullable(),
       table
-        .integer("user_id")
-        .unsigned()
-        .notNullable()
+        .string("follower_user_id")
         .references("sub")
         .inTable("users")
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE"),
-      table.text("body"),
+        .notNullable(),
       table.timestamps(true, true);
   });
 };
@@ -23,5 +20,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex.schema.dropTableIfExists("posts");
+  return knex.schema.dropTableIfExists("following");
 };

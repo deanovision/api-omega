@@ -10,6 +10,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@faker-js/faker": "^7.4.0",
     "nodemon": "^2.0.19"
   },
   "dependencies": {
@@ -23,6 +24,8 @@
     "jsdom": "^20.0.0",
     "jwt-decode": "^3.1.2",
     "knex": "^2.2.0",
-    "pg": "^8.7.3"
+    "morgan": "^1.10.0",
+    "pg": "^8.7.3",
+    "yup": "^0.32.11"
   }
 }
