@@ -1,6 +1,6 @@
 # API Documentation Template
 
-#### Backend delpoyed at [api-omega.herokuapp.com](https://api-omega.herokuapp.com/)  <br> 
+#### Backend delpoyed at (https://api-omega.herokuapp.com/)[api-omega.herokuapp.com]  <br> 
 
 ## Getting started
 
