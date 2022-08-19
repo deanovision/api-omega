@@ -1,4 +1,4 @@
-`[Omega Social API](https://api-omega.herokuapp.com/)/` // backend server
+`[[Omega Social API]](https://api-omega.herokuapp.com/)(https://api-omega.herokuapp.com/)/` // backend server
 
 ### all routes are authenticated, token must be passed through header
 example request header
