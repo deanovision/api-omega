@@ -2,11 +2,16 @@
 [Omega Social API](https://api-omega.herokuapp.com/)
 
 ### all routes are authenticated, token must be passed through header
-example request header
+example request
 ```json
-headers: {
-  "authentication": USER_TOKEN
-}
+      axios({
+        method: "post",
+        url: `${API_URL}/users/`,
+        headers: {
+          authorization: ///TOKEN,
+        },
+        data: {...userDetails},
+      })
 ```
 
 
