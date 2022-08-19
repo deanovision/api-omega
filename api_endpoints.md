@@ -8,7 +8,7 @@ example request
         method: "post",
         url: `${API_URL}/users/`,
         headers: {
-          authorization: ///TOKEN,
+          authorization: TOKEN, //ADD YOUR TOKEN HERE
         },
         data: {...userDetails},
       })
