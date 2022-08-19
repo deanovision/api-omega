@@ -3,7 +3,7 @@
 
 ### all routes are authenticated, token must be passed through header
 example request
-```json
+```javascript
       axios({
         method: "post",
         url: `${API_URL}/users/`,
