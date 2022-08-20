@@ -11,8 +11,8 @@ module.exports = (router) => {
 
 async function getUserById(req, res, next) {
   try {
-    const { user_id } = req.params;
-    let user = await db.getUserById(user_id);
+    const { uid } = req.params;
+    let user = await db.getUserById(uid);
     res.status(200).json({ ...user });
   } catch (err) {
     err === "user not found"
@@ -86,7 +86,6 @@ async function getAllFriends(req, res, next) {
     let friends = await db.getAllUsers(req.params.uid);
     res.status(201).json(friends);
   } catch (err) {
-    console.log(err);
     next({ status: true, code: 500 });
   }
 }
