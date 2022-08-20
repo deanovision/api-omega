@@ -8,11 +8,11 @@ module.exports = {
   getAllUsers,
 };
 
-async function getUserById(user_id) {
+async function getUserById(uid) {
   try {
     const user = await db("users")
-      .where({ uid: user_id })
-      .select("user_id", "user_name", "avatar_url", "last_active", "bio")
+      .where({ uid })
+      .select("uid", "user_name", "avatar_url", "last_active", "bio")
       .first();
     if (user === undefined) {
       throw "user not found";
