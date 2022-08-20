@@ -1,10 +1,12 @@
-### API URL
+### API URL [Omega Social API](https://api-omega.herokuapp.com/)
 
-[Omega Social API](https://api-omega.herokuapp.com/)
+### All routes are authenticated, token must be passed through header
 
-### all routes are authenticated, token must be passed through header
+<br>
 
-example request
+### Example Request
+
+<br>
 
 ```javascript
 axios({
@@ -29,6 +31,7 @@ axios({
 
 ### Request POST `/api/users`
 
+<br>
 Request Body Example
 
 ```json
@@ -41,7 +44,7 @@ Request Body Example
 }
 ```
 
-### Response `201`
+Response `201`
 
 ```json
 {

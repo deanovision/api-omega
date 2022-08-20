@@ -2,10 +2,10 @@ const db = require("../models/userModel");
 const { newUserSchema, updateUserSchema } = require("../schemas");
 module.exports = (router) => {
   router.post("/", addUser);
-  router.get("/:user_id/all", getAllFriends);
-  router.get("/:user_id", getUserById);
-  router.put("/:user_id", updateUser);
-  router.post("/:user_id", followUser);
+  router.get("/:uid/all", getAllFriends);
+  router.get("/:uid", getUserById);
+  router.put("/:uid", updateUser);
+  router.post("/:uid", followUser);
   return router;
 };
 
@@ -33,6 +33,7 @@ async function addUser(req, res, next) {
     const userId = await db.addNewUser(user);
     res.status(201).json(userId);
   } catch (err) {
+    // console.log(err);
     next({ status: true, code: 500 });
   }
 }
@@ -40,7 +41,7 @@ async function updateUser(req, res, next) {
   //If the sub in the token sent does
   //not match the sub in the request body
   //send error
-  if (!req.body.sub === req.userInfo.user_id) {
+  if (!req.body.uid === req.uid) {
     next({ status: true, code: 403 });
     return;
   }
@@ -76,14 +77,16 @@ async function followUser(req, res, next) {
   }
 }
 async function getAllFriends(req, res, next) {
-  if (!req.params.user_id || req.params.user_id !== req.user_id) {
+  // console.log(req.headers);
+  if (!req.params.uid || req.params.uid !== req.uid) {
     next({ status: true, code: 400 });
     return;
   }
   try {
-    let friends = await db.getAllUsers(req.params.user_id);
+    let friends = await db.getAllUsers(req.params.uid);
     res.status(201).json(friends);
   } catch (err) {
+    console.log(err);
     next({ status: true, code: 500 });
   }
 }

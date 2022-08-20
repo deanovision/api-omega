@@ -30,7 +30,7 @@ for (let i = 0; i <= userIds.length - 1; i++) {
     name: faker.name.fullName(),
     user_name: faker.unique(faker.internet.userName),
     email: faker.unique(faker.internet.email),
-    user_id: userIds[i],
+    uid: userIds[i],
     avatar_url: faker.internet.avatar(),
     bio: faker.lorem.paragraph(),
   });
