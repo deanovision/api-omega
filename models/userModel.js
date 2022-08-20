@@ -11,8 +11,8 @@ module.exports = {
 async function getUserById(user_id) {
   try {
     const user = await db("users")
-      .where({ sub: user_id })
-      .select("sub", "user_name", "avatar_url", "last_active", "bio")
+      .where({ uid: user_id })
+      .select("user_id", "user_name", "avatar_url", "last_active", "bio")
       .first();
     if (user === undefined) {
       throw "user not found";
@@ -24,7 +24,7 @@ async function getUserById(user_id) {
 }
 async function addNewUser(user) {
   try {
-    const userId = await db("users").insert(user, "user_id");
+    const userId = await db("users").insert(user, "uid");
     return userId[0];
   } catch (err) {
     throw err;
@@ -33,8 +33,8 @@ async function addNewUser(user) {
 async function updateUser(user) {
   try {
     const userId = await db("users")
-      .where({ user_id: user.user_id })
-      .update(user, "user_id", ["sub", "name", "user_name", "email"]);
+      .where({ uid: user.user_id })
+      .update(user, "user_id", ["uid", "name", "user_name", "email"]);
     return userId[0];
   } catch (err) {
     throw err;
@@ -88,11 +88,16 @@ async function getAllUsers(user_id) {
   //this function accepts a user and returns
   //a list of the users they currently follow
   try {
-    const users = await db("followers")
-      .where({ user_id })
-      .rightJoin("users", "sub", "friend_user_id")
-      .select("sub", "name", "user_name", "avatar_url", "last_active", "bio");
-    return users;
+    const friends = await db
+      .select("user_id as my_user_id")
+      .from("followers")
+      .where({ user_id: user_id })
+      .rightJoin("users", "uid", "friend_user_id")
+      .select("uid", "name", "user_name", "avatar_url", "last_active", "bio");
+    return friends.map((friend) => {
+      const { uid, name, user_name, avatar_url, last_active, bio } = friend;
+      return { uid, name, user_name, avatar_url, last_active, bio };
+    });
   } catch (err) {
     throw err;
   }

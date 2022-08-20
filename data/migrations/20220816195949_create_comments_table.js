@@ -15,7 +15,7 @@ exports.up = function (knex) {
       table.string("user_id").notNullable();
     table
       .foreign("user_id")
-      .references("user_id")
+      .references("uid")
       .inTable("users")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
