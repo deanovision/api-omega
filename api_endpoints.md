@@ -1,8 +1,6 @@
 ### API URL [Omega Social API](https://api-omega.herokuapp.com/)
 
-### All routes are authenticated, token must be passed through header
-
-<br>
+All routes are authenticated, token must be passed through header
 
 ### Example Request
 
