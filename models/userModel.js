@@ -12,7 +12,7 @@ async function getUserById(uid) {
   try {
     const user = await db("users")
       .where({ uid })
-      .select("uid", "user_name", "avatar_url", "last_active", "bio")
+      .select("uid", "name", "user_name", "avatar_url", "last_active", "bio")
       .first();
     if (user === undefined) {
       throw "user not found";

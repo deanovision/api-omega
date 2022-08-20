@@ -61,6 +61,7 @@ async function updateUser(req, res, next) {
   }
 }
 async function followUser(req, res, next) {
+  console.log(req.body);
   if (!req.body.user_id || !req.body.friend_user_id) {
     next({ status: true, code: 400 });
     return;
