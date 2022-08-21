@@ -1,4 +1,6 @@
+const knex = require("knex");
 const db = require("../data/db");
+const { format } = require("date-fns");
 module.exports = {
   getUserById,
   addNewUser,
@@ -9,15 +11,24 @@ module.exports = {
 };
 
 async function getUserById(uid) {
+  // console.log(format(new Date(), "YYYY-MM-DD hh:mm:ss"));
   try {
     const user = await db("users")
       .where({ uid })
-      .select("uid", "name", "user_name", "avatar_url", "last_active", "bio")
-      .first();
+      .update({ last_active: format(new Date(), "yyyy-MM-dd hh:mm:ss") }, [
+        "uid",
+        "name",
+        "user_name",
+        "avatar_url",
+        "last_active",
+        "bio",
+      ]);
+    // .select("uid", "name", "user_name", "avatar_url", "last_active", "bio")
+    // .first();
     if (user === undefined) {
       throw "user not found";
     }
-    return user;
+    return user[0];
   } catch (err) {
     throw err;
   }
@@ -79,21 +90,25 @@ async function unfollowUser(user_id, friend_user_id) {
     const deletedRows = await db("followers")
       .where({ user_id: user_id, friend_user_id: friend_user_id })
       .del();
+    //returns number of rows deleted, will be 1 if successful
     return deletedRows;
   } catch (err) {
     throw err;
   }
 }
-async function getAllUsers(user_id) {
+async function getAllUsers(user_id, limit = 20, offset = 0) {
   //this function accepts a user and returns
   //a list of the users they currently follow
   try {
     const friends = await db
       .select("user_id as my_user_id")
+      .limit(limit)
+      .offset(offset)
       .from("followers")
-      .where({ user_id: user_id })
+      .where({ user_id })
       .rightJoin("users", "uid", "friend_user_id")
       .select("uid", "name", "user_name", "avatar_url", "last_active", "bio");
+
     return friends.map((friend) => {
       const { uid, name, user_name, avatar_url, last_active, bio } = friend;
       return { uid, name, user_name, avatar_url, last_active, bio };
