@@ -1,4 +1,3 @@
-const jwt_decode = require("jwt-decode");
 const { getAuth } = require("firebase-admin/auth");
 const { initializeApp } = require("firebase-admin/app");
 const firebaseConfig = {
@@ -15,16 +14,11 @@ initializeApp(firebaseConfig);
 module.exports = authenticateToken;
 
 async function authenticateToken(req, res, next) {
-  // console.log(req.headers.authorization);
   try {
     const token = req.headers.authorization;
     const userDetails = await getAuth().verifyIdToken(token);
     req.uid = userDetails.sub;
     next();
-    // const token = jwt_decode(req.headers.authorization);
-    // // console.log(token);
-    // req.uid = token.sub;
-    // next();
   } catch (error) {
     console.log(error);
     next({ status: true, code: 401 });
