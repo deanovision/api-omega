@@ -8,6 +8,7 @@ module.exports = {
   followUser,
   unfollowUser,
   getAllUsers,
+  findUsers,
 };
 
 async function getUserById(uid) {
@@ -17,19 +18,30 @@ async function getUserById(uid) {
       .where({ uid })
       .update({ last_active: format(new Date(), "yyyy-MM-dd hh:mm:ss") }, [
         "uid",
+        "email",
         "name",
-        "user_name",
-        "avatar_url",
+        "user_name as userName",
+        "avatar_url as avatarUrl",
         "last_active",
         "bio",
       ]);
-    // .select("uid", "name", "user_name", "avatar_url", "last_active", "bio")
+    // .select(
+    //   "uid",
+    //   "email",
+    //   "name",
+    //   "user_name",
+    //   "avatar_url",
+    //   "last_active",
+    //   "bio"
+    // )
     // .first();
+    // console.log(user);
     if (user === undefined) {
       throw "user not found";
     }
     return user[0];
   } catch (err) {
+    console.log(err);
     throw err;
   }
 }
@@ -38,14 +50,22 @@ async function addNewUser(user) {
     const userId = await db("users").insert(user, "uid");
     return userId[0];
   } catch (err) {
+    console.log(err);
     throw err;
   }
 }
 async function updateUser(user) {
   try {
     const userId = await db("users")
-      .where({ uid: user.user_id })
-      .update(user, "user_id", ["uid", "name", "user_name", "email"]);
+      .where({ uid: user.uid })
+      .update(user, [
+        "uid",
+        "name",
+        "user_name as userName",
+        "email",
+        "avatar_url as avatarUrl",
+        "bio",
+      ]);
     return userId[0];
   } catch (err) {
     throw err;
@@ -74,17 +94,24 @@ async function followUser(user_id, friend_user_id) {
     throw 400;
   }
 }
-// async function followUser(user_id, friend_user_id) {
-//   try {
-//     const id = await db("followers").insert(
-//       { user_id, friend_user_id },
-//       "friend_user_id"
-//     );
-//     return id[0];
-//   } catch (err) {
-//     throw err;
-//   }
-// }
+async function findUsers(search_term) {
+  try {
+    const users = await db("users")
+      .select("uid", "name", "user_name", "avatar_url", "email", "bio")
+      .where(db.raw(` "name" ILIKE '${search_term}%'`));
+    // .raw(`SELECT * FROM "users" WHERE "name" ILIKE '${search_term}'`)
+
+    // const users = await db("users").whereILike("name", `%${search_term}%`);
+    // .orWhereLike("name", `%${search_term.toUpperCase()}%`);
+    // .select("uid", "name", "user_name", "avatar_url", "email", "bio");
+    // console.log("users", users);
+    // const userArray = Object.values(users);
+    return users;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
 async function unfollowUser(user_id, friend_user_id) {
   try {
     const deletedRows = await db("followers")
