@@ -3,6 +3,7 @@ module.exports = (router) => {
   router.get("/get-all-posts/:uid", getPosts);
   router.get("/get-friends-posts/:uid", getFriendsPosts);
   router.post("/add-post", addNewPost);
+  router.delete("/delete-post/:post_id", deletePost);
   return router;
 };
 
@@ -35,6 +36,16 @@ async function addNewPost(req, res, next) {
     let post = await db.addPost(uid, body);
     res.status(200).json(post);
   } catch (err) {
+    next({ status: true, code: 500 });
+  }
+}
+async function deletePost(req, res, next) {
+  try {
+    const uid = req.uid;
+    let post = await db.deletePost(uid, req.params.post_id);
+    res.status(200).json(post);
+  } catch (err) {
+    console.log(err);
     next({ status: true, code: 500 });
   }
 }

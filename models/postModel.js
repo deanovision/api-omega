@@ -88,14 +88,30 @@ async function addPost(uid, body, limit = 20, offset = 0) {
     throw err;
   }
 }
-async function deletePost(uid, post_id) {
+async function deletePost(uid, post_id, limit = 20, offset = 0) {
   try {
-    const deletedPost = await db("posts")
-      .where({ user_id: uid, post_id: post_id })
-      .del();
+    //delete post then fetch posts from db to
+    //send to the client
+    await db("posts").where({ user_id: uid, post_id: post_id }).del();
+    const posts = await db("posts")
+      .where({ user_id: uid })
+      .rightJoin("users", "uid", "user_id")
+      .select(
+        "uid",
+        "post_id as postId",
+        "avatar_url as postedByAvatarUrl",
+        "body",
+        "name as postedBy",
+        "user_name as userName",
+        "posts.created_at as createdAt"
+      )
+      .limit(limit)
+      .offset(offset)
+      .orderBy("posts.created_at", "desc");
     //returns number of deleted posts
-    return deletedPost;
+    return posts;
   } catch (err) {
+    console.log(err);
     throw err;
   }
 }
