@@ -19,7 +19,7 @@ exports.up = function (knex) {
       .inTable("users")
       .onDelete("CASCADE")
       .onUpdate("CASCADE");
-    table.text("body"), table.timestamps(true, true);
+    table.text("body").notNullable(), table.timestamps(true, true);
   });
 };
 
