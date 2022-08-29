@@ -19,13 +19,14 @@ axios({
 
 ## **/api/users**
 
-| Method | Endpont                   | Response | Description     |
-| :----: | :------------------------ | -------- | --------------- |
-|  POST  | `/api/users`              | 201      | Add New User    |
-|  GET   | `/api/users/:user_id/all` | 200      | Get All Friends |
-|  GET   | `/api/users/:user_id`     | 200      | Get User By Id  |
-|  PUT   | `/api/users/:user_id`     | 201      | Update User     |
-|  POST  | `/api/users/:user_id`     | 201      | Follower User   |
+| Method | Endpont                               | Response | Description     |
+| :----: | :------------------------------------ | -------- | --------------- |
+|  POST  | `/api/users/add`                      | 201      | Add New User    |
+|  GET   | `/api/users/find/:search_term`        | 201      | Add New User    |
+|  GET   | `/api/users/get-all-friends/:user_id` | 200      | Get All Friends |
+|  GET   | `/api/users/get-profile/:user_id`     | 200      | Get User By Id  |
+|  PUT   | `/api/users/update-profile/:user_id`  | 201      | Update User     |
+|  POST  | `/api/users/follow-user/:user_id`     | 201      | Follower User   |
 
 ### Request POST `/api/users`
 
