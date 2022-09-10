@@ -6,7 +6,7 @@
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js",
-    "test": "jest --verbose --watch --coverage --expand"
+    "test": "jest --verbose --watchAll --coverage --expand"
   },
   "author": "",
   "license": "MIT",
