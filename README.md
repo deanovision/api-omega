@@ -32,7 +32,7 @@ to make development easier in case bugs occur. Helmet for securing our headers.
 | Method | Endpoint                | Access Control | Description                                  |
 | ------ | ----------------------- | -------------- | -------------------------------------------- |
 | GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
+| PUT    | `/organizations/:orgId` | owners         | Modify an existing organization.             |
 | DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
 
 #### User Routes
